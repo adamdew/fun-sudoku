@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import SudokuMatrix from './SudokuMatrix';
-import solveSudoku from './SudokuSolver';
+import {solveSudoku} from './SudokuSolver';
 
 
 function Board(props: SudokuMatrix) {
@@ -8,25 +8,26 @@ function Board(props: SudokuMatrix) {
     const [matrix] = useState(props.matrix);
 
     //algorthim logic
-
+    
     solveSudoku(matrix);
     
     //rendering logic
 
-    let renderCells = (cells: Array<Number>) => {
+
+    let renderCells = (cells: Array<Number>, rowIndex: number) => {
         return cells.map((c: Number, i) => {
 
             return (i <= 8) ? (
-                <div className='cell'>{c}</div>
+                <div className='cell' key={"cell-"+i+"-row-"+rowIndex}>{c}</div>
             ) : ''
 
         });
     }
 
-    let renderRows = matrix.map(r => {
+    let renderRows = matrix.map((r, index) => {
         return (
-            <div className='board-row'>
-                {renderCells(r)}
+            <div className='board-row' key={"row-"+index}>
+                {renderCells(r, index)}
             </div>
         );
     });
